@@ -1,0 +1,59 @@
+##############################################################################################
+# exp_name: experiment name used for logging
+# model: 
+#   nf: number of filters in the firt convolutional layer in either Discriminator or Gennerator
+#   num_res_blocks: number of residual blocks incorporated in Generator
+# train:
+#   dataset:
+#     data_dir: data directory used for training
+#   checkpoint:
+#     load_model: whether or not load a check point to model, if load checkpoint_gen and 
+#     lrG: learning rate of Gen
+#     lrD: learning rate of Disc
+#     is_log: whether or not log value for visualizing trainig process on wandb server.
+#   hyp:
+#     batch_size: size of each mini-batch used for training
+#     num_epoch: number training epoch        
+#     checkpoint_disc must be specified
+# eval_checkpoint_path: checkpoint path to evaluate model
+###############################################################################################
+
+exp_name: 'experiment_2'
+
+seed: 0
+
+model:
+  nf: 64
+  num_res_blocks: 16
+
+train:
+  dataset:
+    data_dir: '/home/daoduyhung/windowshare/ILSVRC2012_img_train/'
+
+  checkpoint:
+    load_model: False
+    is_log: True
+    gen: 'model/main/gen_1.pth.tar'
+    disc: 'model/main/disc_1.pth.tar'
+  
+  hyp:
+    batch_size: 16 
+    num_epoch: 2 #6
+  
+  optim:
+    lr: 0.0001
+    betas: [0.9, 0.999]
+
+  lr_scheduler:
+    milestones: [3]
+    gamma: 0.1
+
+  log_iter: 100
+
+test:
+  dataset:
+    hr_dir: 'data/test/Set5/GTmod12/'
+    lr_dir: 'data/test/Set5/LRbicx4/'
+  eval_checkpoint_path: 'model/experiment_1/gen_1.pth.tar'
+
+
