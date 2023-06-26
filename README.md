@@ -37,7 +37,7 @@ python src/eval.py
 SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: from left to right: low resolution, resolved resolution (SRGAN), high resolution
 ## Set5
 * psnr: 30.7253360748291, ssim: 0.9823473691940308
-<div style="display:flex; width:33%;">
+<div style="display:flex;">
     <img src="reports/Set5/baby_LR.png" style="width:33%;">
     <img src="reports/Set5/baby_HR.png" style="width:33%;">
     <img src="reports/Set5/baby_SRGANX4.png" style="width:33%;">
@@ -45,14 +45,14 @@ SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: 
 
 ## Set14
 * psnr: 20.309974670410156, ssim: 0.9457033276557922
-<div style="display:flex; width:33%">
+<div style="display:flex;">
     <img src="reports/Set14/baboon_LR.png" style="width:33%;">
     <img src="reports/Set14/baboon_HR.png" style="width:33%;">
     <img src="reports/Set14/baboon_SRGANX4.png" style="width:33%;">
 </div>
 
 * psnr: 20.944629669189453, ssim: 0.9769780039787292
-<div style="display:flex; width:33%">
+<div style="display:flex;">
     <img src="reports/Set14/comic_LR.png" style="width:33%;">
     <img src="reports/Set14/comic_HR.png" style="width:33%;">
     <img src="reports/Set14/comic_SRGANX4.png" style="width:33%;">
@@ -60,21 +60,21 @@ SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: 
 
 ## BDS100
 * psnr: 31.74207305908203, ssim: 0.9930363297462463
-<div style="display:flex; width:33%">
+<div style="display:flex;">
     <img src="reports/BDS100/189080_LR.png" style="width:33%;">
     <img src="reports/BDS100/189080_HR.png" style="width:33%;">
     <img src="reports/BDS100/189080_SRGANX4.png" style="width:33%;">
 </div>
 
 * psnr: 29.661542892456055, ssim: 0.9960121512413025
-<div style="display:flex; width:33%">
+<div style="display:flex;">
     <img src="reports/BDS100/210088_LR.png" style="width:33%;">
     <img src="reports/BDS100/210088_HR.png" style="width:33%;">
     <img src="reports/BDS100/210088_SRGANX4.png" style="width:33%;">
 </div>
 
 * psnr: 23.430509567260742, ssim: 0.9802849292755127
-<div style="display:flex; width:33%">
+<div style="display:flex;">
     <img src="reports/BDS100/285079_LR.png" style="width:33%;">
     <img src="reports/BDS100/285079_HR.png" style="width:33%;">
     <img src="reports/BDS100/285079_SRGANX4.png" style="width:33%;">
