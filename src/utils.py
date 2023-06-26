@@ -36,19 +36,17 @@ def save_checkpoint(
 
 def load_checkpoint(
         checkpoint_path: str, 
-        model: nn.Module, 
-        optimizer: Optimizer, 
-        scheduler):
-    """Load model and optimizer state_dict from checkpoint file."""
+        ):
+    """Load model and optimizer state_dict from checkpoint file return (model_state_dict, optimizer_state_dict, epoch)"""
     checkpoint = torch.load(checkpoint_path, map_location=constants.DEVICE)
-    model = model.load_state_dict(checkpoint["model"])
-    optimizer = optimizer.load_state_dict(checkpoint["optimizer"])
-    scheduler = checkpoint["scheduler"]
-    start_epoch = checkpoint["epoch"]
-    psnr = checkpoint["psnr"]
-    ssim = checkpoint["ssim"]
+    model_state_dict = checkpoint["model"]
+    optimizer_state_dict = checkpoint["optimizer"]
+    epoch = checkpoint["epoch"]
+    # scheduler = checkpoint["scheduler"]
+    # psnr = checkpoint["psnr"]
+    # ssim = checkpoint["ssim"]
 
-    return model, optimizer, scheduler, start_epoch, psnr, ssim
+    return model_state_dict, optimizer_state_dict, epoch
 
 # LOG TRAINING
 def log_on_train_start(log_name, config):
@@ -121,9 +119,6 @@ def save_list_image(images, filenames, dir):
     - dir (str): saved directory. 
     """
     for image, filename in list(zip(images, filenames)):
-        if filename.endswith((".png", ".jpg")):
-            save_image(image, f'{dir}/{filename}')
-        else:
-            save_image(image, f'{dir}/{filename}.png')
+        save_image(image, f'{dir}/{filename}_SRGANX4.png')
             
 

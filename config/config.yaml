@@ -33,8 +33,8 @@ train:
   checkpoint:
     load_model: False
     is_log: True
-    gen: 'model/main/gen_1.pth.tar'
-    disc: 'model/main/disc_1.pth.tar'
+    gen: 'model/gen_best.pth.tar'
+    disc: 'model/disc_best.pth.tar'
   
   hyp:
     batch_size: 16 
@@ -54,6 +54,11 @@ test:
   dataset:
     hr_dir: 'data/test/Set5/GTmod12/'
     lr_dir: 'data/test/Set5/LRbicx4/'
-  eval_checkpoint_path: 'model/experiment_1/gen_1.pth.tar'
+
+eval:
+  dataset:
+    data_dir: 'data/eval/'
+  checkpoint:
+    load_dir: 'model/gen_best.pth.tar'
 
 

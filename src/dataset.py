@@ -10,10 +10,6 @@ import random
 from PIL import Image
 from torchvision import transforms
 from src import constants
-import albumentations as alb
-from albumentations.pytorch import ToTensorV2
-import numpy as np
-import cv2
 
 class CustomDataset(Dataset):
     def __init__(
@@ -110,10 +106,10 @@ class EvalDataset(Dataset):
         highres, lowres, name = Image.open(self.data[index][0]), Image.open(self.data[index][1]), self.data[index][2]
         transform =transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize(mean=[0, 0, 0], std=[1, 1, 1]), 
+            transforms.Normalize(mean=constants.IMAGENET_MEAN, std=constants.IMAGENET_STD), 
         ])
 
-        highres, lowres = transform(highres), transform(lowres)
+        highres, lowres = transform(highres).unsqueeze(0), transform(lowres).unsqueeze(0)
         return highres, lowres, name
 
 class TestDataset(Dataset):

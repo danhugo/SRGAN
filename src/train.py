@@ -120,6 +120,10 @@ def test(
             hr = hr.to(constants.DEVICE)
             lr = lr.to(constants.DEVICE)
             rescale = netG(lr)
+
+            hr = hr * torch.tensor(constants.IMAGENET_STD)[:,None,None].to(constants.DEVICE) + torch.tensor(constants.IMAGENET_MEAN)[:,None,None].to(constants.DEVICE)
+            rescale = rescale * torch.tensor(constants.IMAGENET_STD)[:,None,None].to(constants.DEVICE) + torch.tensor(constants.IMAGENET_MEAN)[:,None,None].to(constants.DEVICE)
+            
             psnr = metric.psnr(hr, rescale)
             ssim = metric.ssim(hr, rescale)
 

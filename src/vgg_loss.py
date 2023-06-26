@@ -1,6 +1,5 @@
 from torchvision.models import vgg19
 import torch.nn as nn
-import torch
 import constants
 
 class VGGLoss(nn.Module):

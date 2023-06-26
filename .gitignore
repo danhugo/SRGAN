@@ -1,10 +1,14 @@
-test
+test/*
 __pycache__
 
 wandb
 data/CVPR/
-data/eval/*/*.png
 
 data/eval/*
+data/test/*
+
+!data/eval/.gitkeep
+!data/test/.gitkeep
 
 model/*
+!model/.gitkeep

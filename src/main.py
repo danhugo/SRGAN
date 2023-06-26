@@ -41,8 +41,12 @@ def main(config):
     schedulerD = define_scheduler(optimD, config)
 
     if config.train.checkpoint.load_model:
-        netG, optimG, schedulerG = ut.load_checkpoint(config.train.checkpoint.gen, netG, optimG, schedulerG)
-        netD, optimD, schedulerD = ut.load_checkpoint(config.train.checkpoint.disc, netD, optimD, schedulerD)
+        G_state_dict, optimG_state_dict, start_epoch = ut.load_checkpoint(config.train.checkpoint.gen)
+        D_state_dict, optimD_state_dict, start_epoch = ut.load_checkpoint(config.train.checkpoint.disc)
+        netG.load_state_dict(G_state_dict)
+        netD.load_state_dict(D_state_dict)
+        optimG.load_state_dict(optimG_state_dict)
+        optimD.load_state_dict(optimD_state_dict)
 
     # Loss function
     content_criteria = nn.MSELoss()
