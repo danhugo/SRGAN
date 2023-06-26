@@ -21,7 +21,7 @@ In this code, I use Set5 dataset for val and Set5, Set14, and BSD100 for evaluat
 
 # Usage
 ## Train
-Setting for training and evaluating: `config/config.yaml`
+Setting for training and evaluating: `config/config.yaml`. Download training dataset and modify `train:dataset:data_dir: <path/to/train/dataset>`
 
 ```
 python src/main.py
