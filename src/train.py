@@ -58,14 +58,16 @@ def train(
 
         fake = netG(lowres)
         output = netD(fake)
-        adversarial_loss = 1e-3 * adversarial_criteria(output, torch.ones_like(output))
+        adversarial_loss = constants.ADVERSARIAL_LOSS_COEFF * adversarial_criteria(output, torch.ones_like(output))
 
         hr_feature = feature_extractor(highres)
         sr_feature = feature_extractor(fake)
 
-        content_loss = 0.006 * content_criteria(sr_feature, hr_feature.detach())
-        G_loss = content_loss + adversarial_loss
+        content_loss = constants.CONTENT_LOSS_COEFF * content_criteria(sr_feature, hr_feature.detach())
 
+        pixel_loss = content_criteria(fake, highres)
+        G_loss = content_loss + adversarial_loss + pixel_loss
+        
         G_loss.backward()
         optimG.step()
 

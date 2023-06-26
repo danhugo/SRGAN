@@ -24,33 +24,32 @@ def main(config):
     ut.create_dir(checkpoint_dir)
 
     # Define basic elements for training
-    # netG, netD = define_model(config)
+    netG, netD = define_model(config)
+
     # optimG = define_optimizer(netG, config)
     # optimD = define_optimizer(netD, config)
-
-    netG = srgan.Generator(config.model.nf, config.model.num_res_blocks).to(constants.DEVICE)
-    netD = srgan.Discriminator(config.model.nf).to(constants.DEVICE)
+    
     optimG = optim.Adam(netG.parameters(), 
                        lr=config.train.optim.lr, 
                        betas=config.train.optim.betas)
-    optimD = optim.Adam(netG.parameters(), 
+    optimD = optim.Adam(netD.parameters(), 
                        lr=config.train.optim.lr, 
                        betas=config.train.optim.betas)
 
 
-    # schedulerG = define_scheduler(optimG, config)
-    # schedulerD = define_scheduler(optimD, config)
+    schedulerG = define_scheduler(optimG, config)
+    schedulerD = define_scheduler(optimD, config)
 
-    # if config.train.checkpoint.load_model:
-    #     netG, optimG, schedulerG = ut.load_checkpoint(config.train.checkpoint.gen, netG, optimG, schedulerG)
-    #     netD, optimD, schedulerD = ut.load_checkpoint(config.train.checkpoint.disc, netD, optimD, schedulerD)
+    if config.train.checkpoint.load_model:
+        netG, optimG, schedulerG = ut.load_checkpoint(config.train.checkpoint.gen, netG, optimG, schedulerG)
+        netD, optimD, schedulerD = ut.load_checkpoint(config.train.checkpoint.disc, netD, optimD, schedulerD)
 
     # Loss function
-    pixel_criteria = nn.MSELoss()
+    content_criteria = nn.MSELoss()
     adversarial_criteria = nn.BCEWithLogitsLoss()
-    feature_criteria = VGGLoss()
-    feature_criteria = feature_criteria.to(constants.DEVICE)
-    feature_criteria.eval()
+    feature_extractor = VGGLoss()
+    feature_extractor = feature_extractor.to(constants.DEVICE)
+    feature_extractor.eval()
     
     # Data loader
     print("Loading data ...")
@@ -59,66 +58,22 @@ def main(config):
     print("Finish loading data")
 
     for epoch in range(config.train.hyp.num_epoch):
-        # D_loss, G_loss = train(train_loader, epoch, netG, netD, optimG, optimD,pixel_criteria, adversarial_criteria, feature_criteria, config)
         netG.train()
         netD.train()
+        D_loss, G_loss = train(
+            train_loader, 
+            epoch, 
+            netG, 
+            netD, 
+            optimG, 
+            optimD, 
+            content_criteria, 
+            adversarial_criteria, 
+            feature_extractor, 
+            config)
 
-        mean_D_loss = []
-        mean_G_loss = []
-
-        log_in_epoch = esdict()
-        num_batch = len(train_loader)
-
-        for step, (highres, lowres) in enumerate(tqdm(train_loader, desc=f'{epoch+1}/{config.train.hyp.num_epoch}')):
-            highres = highres.to(constants.DEVICE)
-            lowres = lowres.to(constants.DEVICE)
-
-            # Train Genenrator
-            optimG.zero_grad()
-
-            fake = netG(lowres)
-            output = netD(fake)
-            adversarial_loss = 1e-3 * adversarial_criteria(output, torch.ones_like(output))
-            # pixel_loss = pixel_criteria(fake, highres)
-            hr_feature = feature_criteria(highres)
-            sr_feature = feature_criteria(fake)
-
-            content_loss = 0.006 * pixel_criteria(sr_feature, hr_feature.detach())
-            # content_loss = 0.006 * feature_criteria(fake, highres.detach()) # 0.006
-            G_loss = content_loss + adversarial_loss
-            print(f"content {content_loss}, adv {adversarial_loss}")
-
-            
-            G_loss.backward()
-            optimG.step()
-
-        #     # Train Discriminator
-            optimD.zero_grad()
-            disc_real = netD(highres)
-            D_real_loss = adversarial_criteria(disc_real, torch.ones_like(disc_real))
-            
-            disc_fake = netD(fake.detach())
-            D_fake_loss = adversarial_criteria(disc_fake, torch.zeros_like(disc_fake))
-
-
-            D_loss = D_fake_loss + D_real_loss
-            D_loss.backward()
-            optimD.step()
-
-            # mean loss
-            mean_D_loss.append(D_loss)
-            mean_G_loss.append(G_loss)
-
-            global_step = step + epoch * num_batch
-            if global_step % config.train.log_iter == 0:
-                log_in_epoch.D_loss = D_loss
-                log_in_epoch.G_loss = G_loss
-            
-                if config.train.checkpoint.is_log:
-                    ut.log_image(ut.get_log_image(netG), global_step)
-                    ut.log_in_train_epoch(log_in_epoch, global_step)
-        # schedulerD.step()
-        # schedulerG.step()
+        schedulerD.step()
+        schedulerG.step()
 
         psnr, ssim = test(test_loader, netG)
         is_best = psnr > best_psnr and ssim > best_psnr

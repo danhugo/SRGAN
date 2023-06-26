@@ -55,10 +55,7 @@ class CustomDataset(Dataset):
         img = Image.open(self.data[index]).convert('RGB')
 
         both_transform =transforms.Compose([
-            # transforms.ToTensor(),
             transforms.RandomCrop((constants.HIGH_RES, constants.HIGH_RES)),
-            # transforms.RandomHorizontalFlip(0.5),
-            # transforms.RandomRotation(90),
         ])
 
         highres_transform = transforms.Compose([
@@ -67,7 +64,7 @@ class CustomDataset(Dataset):
         ])
 
         lowres_transform = transforms.Compose([
-            transforms.Resize((constants.LOW_RES, constants.LOW_RES), interpolation=Image.BICUBIC),
+            transforms.Resize((constants.LOW_RES, constants.LOW_RES), interpolation=transforms.InterpolationMode.BICUBIC),
             transforms.ToTensor(),
             transforms.Normalize(mean=constants.IMAGENET_MEAN, std=constants.IMAGENET_STD), 
         ])
@@ -77,7 +74,7 @@ class CustomDataset(Dataset):
         
         img = both_transform(img)
         
-        highres_img, lowres_img = highres_transform(img), lowres_transform(img) # pytorch
+        highres_img, lowres_img = highres_transform(img), lowres_transform(img)
 
         return highres_img, lowres_img
 
