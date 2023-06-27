@@ -1,7 +1,7 @@
 # SRGAN
 Super Resolution GAN.
 
-This is a re-implementation of SRGAN models based on original paper [Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network](https://arxiv.org/abs/1609.04802).
+This is a re-implementation using Pytorch of SRGAN models based on original paper [Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network](https://arxiv.org/abs/1609.04802).
 
 # Requirements
 * Pytorch
