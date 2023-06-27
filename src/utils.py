@@ -120,5 +120,3 @@ def save_list_image(images, filenames, dir):
     """
     for image, filename in list(zip(images, filenames)):
         save_image(image, f'{dir}/{filename}_SRGANX4.png')
-            
-

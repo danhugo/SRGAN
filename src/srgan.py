@@ -116,13 +116,3 @@ class Discriminator(nn.Module):
         out = self.leaky_relu_dens1(out)
         out = self.dens2(out)
         return out
-
-
-
-
-
-
-
-
-        
-

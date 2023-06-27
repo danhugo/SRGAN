@@ -83,7 +83,6 @@ class Metrics():
         """
         self.extract_y_channel = extract_y_channel
 
-
     def extractYchannel(self):
         self.lowres = rgb_to_ycbcr(self.lowres)
         self.highres = rgb_to_ycbcr(self.highres)
@@ -100,6 +99,3 @@ class Metrics():
     def ssim(self, img1: torch.Tensor, img2: torch.Tensor):
         """"""
         return _ssim(img1, img2, window_size=11, sigma=0.15, channels=img1.size(-3))
-
-    
-
