@@ -36,7 +36,7 @@ python src/eval.py
 # Result
 SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: from left to right: low resolution, resolved resolution (SRGAN), high resolution
 ## Set5
-* psnr: 30.7253360748291, ssim: 0.9823473691940308
+* psnr: 30.7253, ssim: 0.9823
 <p float="left">
     <img src="reports/Set5/baby_LR.png" width="200">
     <img src="reports/Set5/baby_HR.png" width="200">
@@ -44,14 +44,14 @@ SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: 
 </p>
 
 ## Set14
-* psnr: 20.309974670410156, ssim: 0.9457033276557922
+* psnr: 20.3099, ssim: 0.9457
 <p float="left">
     <img src="reports/Set14/baboon_LR.png" width="200">
     <img src="reports/Set14/baboon_HR.png" width="200">
     <img src="reports/Set14/baboon_SRGANX4.png" width="200">
 </p>
 
-* psnr: 20.944629669189453, ssim: 0.9769780039787292
+* psnr: 20.9446, ssim: 0.9769
 <p float="left">
     <img src="reports/Set14/comic_LR.png" width="200">
     <img src="reports/Set14/comic_HR.png" width="200">
@@ -59,26 +59,23 @@ SRGAN was evaluated on these dataset: `BSD100, Set14, Set5`. With **scale x4**: 
 </p>
 
 ## BDS100
-* psnr: 31.74207305908203, ssim: 0.9930363297462463
+* psnr: 31.7421, ssim: 0.9930
 <p float="left">
     <img src="reports/BDS100/189080_LR.png" width="200">
     <img src="reports/BDS100/189080_HR.png" width="200">
     <img src="reports/BDS100/189080_SRGANX4.png" width="200">
 </p>
 
-* psnr: 29.661542892456055, ssim: 0.9960121512413025
+* psnr: 29.6615, ssim: 0.9960
 <p float="left">
     <img src="reports/BDS100/210088_LR.png" width="200">
     <img src="reports/BDS100/210088_HR.png" width="200">
     <img src="reports/BDS100/210088_SRGANX4.png" width="200">
 </p>
 
-* psnr: 23.430509567260742, ssim: 0.9802849292755127
+* psnr: 23.4305, ssim: 0.9802
 <p float="left">
     <img src="reports/BDS100/285079_LR.png" width="200">
     <img src="reports/BDS100/285079_HR.png" width="200">
     <img src="reports/BDS100/285079_SRGANX4.png" width="200">
 </p>
-
-
-
